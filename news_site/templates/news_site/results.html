@@ -1,0 +1,68 @@
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+      shrink-to-fit=no">
+      <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-2.0.2.min.css"/>
+      <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-2.0.2.min.css"/>
+      <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-tables-2.0.2.min.css"/>
+    <h1>{{heading}}
+    <title>Media Bias During Pandemics</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    <form action="{% url 'news_site:results' %}" method='GET' class='form-inline'>
+        {% csrf_token %}
+        <div class="form-group mx-sm-3 mb-2">
+        {% bootstrap_form form layout='inline'%}
+        </div>
+        {% buttons %}
+          <button name="submit" class="btn btn-primary mb-2">Search</button>
+        {% endbuttons %}
+      </form> 
+    </h1>
+</head>
+
+<body> 
+
+    <p>{{div_descript| safe}}</p>
+    
+    <p>{{div_deaths| safe}}</p>
+    <hr>
+    {{div| safe}}
+    {{div2| safe}}
+    {{div3| safe}}
+    {{wordcloud| safe}}
+
+    <hr>
+    <h2>Related Articles</h2>
+    {% for result in queryset %}
+    <div class="card mb-3">
+        <h4 class="card-header">
+          <a href={{result.url}}>{{result.headline}}</a>
+        </h4>
+        <div class="card-body">
+          <p>Date Published: {{result.date}}</p>
+          <p>Polarity Score: {{result.polarity}}</p>
+          <p>Subjectivity Score: {{result.subjectivity}}</p>
+          <p>Source: {{result.source}}</p>
+        </div>
+    </div>
+
+    {% empty %}
+    <p>No results found. Please search again.</p>
+
+    {% endfor %}
+</body>
+
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-2.0.2.min.js"></script>
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-2.0.2.min.js"></script>
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-tables-2.0.2.min.js"></script>
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-api-2.0.2.min.js"></script> 
+    {{script | safe}}
+    {{script2 | safe}}
+    {{script3 | safe}}
+</html>

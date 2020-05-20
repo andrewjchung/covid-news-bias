@@ -1,0 +1,22 @@
+{% extends "news_site/base.html" %}
+{% load bootstrap4 %}
+
+
+{% block page_header %}
+  <div class="jumbotron">
+    <h1 class="display-3">Tracking Media Bias During Pandemics</h1>
+    <h2>How biased is news coverage about pandemics?</h2>
+    <p class="lead">Enter a disease to return media coverage and bias assessments.</p>
+
+    <form action="{% url 'news_site:results' %}" method='GET' class='form-inline'>
+      {% csrf_token %}
+      <div class="form-group mx-sm-3 mb-2">
+        {% bootstrap_form form layout='inline'%}
+      </div>
+      {% buttons %}
+      <button name="submit" class="btn btn-primary mb-2">Search</button>
+      {% endbuttons %}
+    </form> 
+  </div>
+{% endblock page_header %}
+
